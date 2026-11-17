@@ -21,17 +21,31 @@
    go mod tidy
 ```
 
-7. В файле `.env.override` (создайте его в корне, если нет) выставьте правильные значения для переменных окружения:
+7. Создайте в корне `.env.override` и укажите данные двух разных тестовых аккаунтов TestBoard:
 
-```
+```dotenv
 TEST_LOGIN=your_login
 TEST_PASSWORD=your_password
+TEST_BUYER_LOGIN=buyer_login
+TEST_BUYER_PASSWORD=buyer_password
 ```
+
+`TEST_LOGIN` и `TEST_PASSWORD` относятся к аккаунту продавца, а `TEST_BUYER_LOGIN` и `TEST_BUYER_PASSWORD` — к аккаунту покупателя. Подставьте свои значения. Файл `.env.override` исключён из Git.
+
+Сценарии лабораторной сами создают и удаляют свои объявления. Фото для загрузки уже находится в `tests/testdata/advertisement.png`. У покупателя должно быть свободное место в избранном.
+
+Для полного прогона прежних сценариев заранее подготовьте у продавца хотя бы одно объявление с фотографией. В `tests/scenarios/advertisementSearch/search_test.go` укажите его полное название в `existingAdTitle` и обновите `searchBeginning`, `searchMiddle` и `searchEnd`.
 
 8. Для запуска всех тестов достаточно выполнить команду в корне проекта:
 
 ```bash
   go test -v ./...
+```
+
+Для запуска только лабораторной работы выполните из корня репозитория:
+
+```shell
+go test -count=1 -v ./tests/scenarios/advertisementCreate/ ./tests/scenarios/favorites/
 ```
 
 9. Отдельный пакет с тестами можно запустить командой:
