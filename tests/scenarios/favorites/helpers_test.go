@@ -10,7 +10,10 @@ import (
 
 	"api-tests-template/internal/managers/advertisement"
 	"api-tests-template/internal/utils"
-	"path/filepath"
+
+	"strconv"
+
+	"api-tests-template/tests/testdata"
 )
 
 // loginFavoriteUsers входит под двумя разными аккаунтами и возвращает их токены.
@@ -37,10 +40,10 @@ func createFavoriteTestAd(t *testing.T, sellerToken, titlePrefix, description st
 	fields := map[string]string{
 		"title":       titlePrefix + " " + utils.RandomString(8),
 		"description": description,
-		"price":       "1557",
-		"quantity":    "2",
+		"price":       strconv.Itoa(testdata.AdvertisementPrice),
+		"quantity":    strconv.Itoa(testdata.AdvertisementQuantity),
 	}
-	photoPath := filepath.Join("..", "..", "testdata", "advertisement.png")
+	photoPath := testdata.AdvertisementPhotoPath()
 
 	t.Log("Продавец создаёт тестовое объявление")
 	return advertisement.CreateAdvertisement(t, sellerToken, fields, photoPath)
